@@ -1,0 +1,10 @@
+.eventGenerator {
+  width: 150px;
+  max-width: 150px;
+  height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: var(--half-padding);
+  padding: 0 var(--padding);
+}
