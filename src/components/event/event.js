@@ -3,69 +3,10 @@ import classes from "./event.css";
 import { generateRandomColor } from "../../utils/generate-random-color";
 import { useSelector } from "../../hooks/use-selector";
 import { currentEventSelector, lastEventSelector } from "../../store/selectors";
-import { useDispatch } from "../../hooks/use-dispatch";
-import { removeEventAction, setLastEventAction, updateEventStatusAction } from "../../store/actions";
-import { eventStatusesMap } from "../../constants/event-statuses";
+import { startAnimation } from "../../utils/start-animation";
+import { useEvent } from "../../hooks/use-event";
 
 const getRotationsAngle = (range, progress) => range * progress;
-
-const startAnimation = (duration, timingFunction, drawFunction) => {
-  let requestId = null;
-
-  const start = performance.now();
-
-  const callback = (time) => {
-    let timeFraction = (time - start) / duration;
-
-    if (timeFraction > 1) timeFraction = 1;
-
-    const progress = timingFunction(timeFraction);
-
-    drawFunction(progress);
-
-    if (timeFraction < 1) {
-      requestId = window.requestAnimationFrame(callback);
-    }
-  };
-
-  requestId = window.requestAnimationFrame(callback);
-
-  return () => {
-    window.cancelAnimationFrame(requestId);
-  }
-};
-
-const useEvent = () => {
-  const [dispatch] = useDispatch();
-
-  const [current] = useSelector(currentEventSelector);
-
-  const onMount = () => {
-    dispatch(updateEventStatusAction(current.id, eventStatusesMap.playing));
-
-    dispatch(setLastEventAction({ ...current }));
-  };
-
-  const onUnmount = () => {
-    dispatch(updateEventStatusAction(current.id, eventStatusesMap.completed));
-
-    dispatch(removeEventAction());
-  };
-
-  const onComplete = () => {
-    dispatch(updateEventStatusAction(current.id, eventStatusesMap.completed));
-
-    dispatch(removeEventAction(current.id));
-  };
-
-  const onProgress = (progress) => {
-    dispatch(setLastEventAction({ ...current, progress }));
-  };
-
-  return [
-    onMount, onUnmount, onProgress, onComplete,
-  ];
-};
 
 const Event = () => {
   const [onMount, onUnmount, onProgress, onComplete] = useEvent();
@@ -76,11 +17,11 @@ const Event = () => {
 
   const [progress, setProgress] = React.useState(0);
 
-  const [realStart, setRealStart] = React.useState(last.progress ?? current.start);
+  const [start, setStart] = React.useState(last.state ?? current.start);
 
-  const [range, setRange] = React.useState(Math.abs(current.end - realStart));
+  const [range, setRange] = React.useState(Math.abs(current.end - start));
 
-  const [rotationAngle, setRotationAngle] = React.useState(realStart + getRotationsAngle(range, progress));
+  const [rotationAngle, setRotationAngle] = React.useState(start + getRotationsAngle(range, progress));
 
   const [color, setColor] = React.useState(generateRandomColor(0.4));
 
@@ -88,15 +29,15 @@ const Event = () => {
     () => {
       onMount();
 
-      const newRealStart = last.progress ?? current.start;
+      const newStart = last.state ?? current.start;
 
-      const newRange = Math.abs(current.end - newRealStart);
+      const newRange = Math.abs(current.end - newStart);
 
-      const predicate = current.end > newRealStart ? 1 : -1;
+      const predicate = current.end > newStart ? 1 : -1;
 
       setColor(generateRandomColor(0.4));
 
-      setRealStart(newRealStart);
+      setStart(newStart);
 
       setRange(newRange);
 
@@ -108,7 +49,7 @@ const Event = () => {
         (p) => {
           const newProgress = p * predicate;
 
-          const newRotationAngle = newRealStart + getRotationsAngle(newRange, newProgress);
+          const newRotationAngle = newStart + getRotationsAngle(newRange, newProgress);
 
           setRotationAngle(newRotationAngle);
 
@@ -146,7 +87,7 @@ const Event = () => {
 
       <div className={classes.infoContainer}>
         <div className={classes.info}>
-          Real start: {Math.round(realStart)}
+          Real start: {Math.round(start)}
         </div>
 
         <div className={classes.info}>
