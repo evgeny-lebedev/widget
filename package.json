@@ -1,12 +1,11 @@
 {
-  "name": "frontend",
+  "name": "widget",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Evgeny Lebedev",
   "license": "MIT",
   "scripts": {
-    "dev-server": "webpack-dev-server --config .webpack/webpack.config.js",
-    "c-c": "tools/create-component.js"
+    "dev-server": "webpack-dev-server --config .webpack/webpack.config.js"
   },
   "devDependencies": {
     "webpack": "^4.41.5",

@@ -1,29 +1,31 @@
-const addEventAction = (event) => ({
-  type: "@EVENT/ADD",
+const pushEventsAction = (events) => ({
+  type: "@EVENTS/PUSH",
+  payload: { events },
+});
+
+const setLastEventAction = (event) => ({
+  type: "@LAST_EVENT/SET",
   payload: { event },
+});
+
+const updateEventStatusAction = (id, status) => ({
+  type: "@EVENT/UPDATE_STATUS",
+  payload: { id, status },
+});
+
+const removeEventAction = (id) => ({
+  type: "@EVENT/REMOVE",
+  payload: { id },
 });
 
 const clearQueueAction = () => ({
   type: "@QUEUE/CLEAR",
 });
 
-const startQueueAction = () => ({
-  type: "@QUEUE/START",
-});
-
-const pauseQueueAction = () => ({
-  type: "@QUEUE/PAUSE",
-});
-
-const abortQueueAction = () => ({
-  type: "@QUEUE/ABORT",
-});
-
-
 export {
-  addEventAction,
+  pushEventsAction,
+  removeEventAction,
   clearQueueAction,
-  startQueueAction,
-  pauseQueueAction,
-  abortQueueAction,
+  setLastEventAction,
+  updateEventStatusAction,
 };

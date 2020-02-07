@@ -1,0 +1,43 @@
+.event {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.infoContainer {
+  position: fixed;
+  width: 300px;
+  right: 20px;
+  top: 105px;
+  padding: 20px;
+  background-color: rgba(29, 29, 29, 0.5);
+  backdrop-filter: blur(20px);
+}
+
+.info {
+  color: rgb(247, 251, 254);
+  font-size: 28px;
+}
+
+.info + .info {
+  margin-top: 10px;
+}
+
+.rectangle {
+  height: 30vmin;
+  width: 4vmin;
+  border-radius: 2vmin;
+  filter: invert(100%);
+}
+
+.rectangle:after{
+  content: "";
+  height: 4vmin;
+  width: 4vmin;
+  border-radius: 50%;
+  position: absolute;
+  background-color: rgb(29, 29, 29);
+  filter: none;
+  bottom: 0;
+}

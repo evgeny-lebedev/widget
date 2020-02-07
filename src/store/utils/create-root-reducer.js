@@ -1,4 +1,4 @@
-import { isVoid } from "../../utils/utils";
+import { isVoid } from "../../utils/predicates";
 
 const createRootReducer = (reducerMap) => (state, action) => {
   const reducerList = reducerMap[action.type];

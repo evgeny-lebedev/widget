@@ -1,5 +1,11 @@
-const languageSelector = (state) => state.language;
-
 const queueSelector = (state) => state.queue;
 
-export { languageSelector, queueSelector };
+const lastEventSelector = (state) => state.last;
+
+const currentEventSelector = (state) => queueSelector(state)[0];
+
+export {
+  queueSelector,
+  lastEventSelector,
+  currentEventSelector,
+};

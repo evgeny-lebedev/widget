@@ -1,6 +1,3 @@
-const and = (left, right) => (value) => left(value) && right(value);
-const or = (left, right) => (value) => left(value) || right(value);
-
 const isEmpty = (value) => (
   typeof value === "number"
     ? value.length
@@ -11,7 +8,7 @@ const isEmpty = (value) => (
 
 const isNil = (value) => value == null;
 
-const isVoid = or(isNil, isEmpty);
+const isVoid = (value) => isNil(value) || isEmpty(value);
 
 export {
   isEmpty,

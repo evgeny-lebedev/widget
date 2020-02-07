@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+  font-size: 14px;
+  transition-property: background-color;
+  transition-timing-function: ease-in-out;
+  transition-duration: 300ms;
+}
+
+.eventsGenerator {
+  width: calc(100vw - 420px);
+  left: 400px;
+}
+
+.eventQueue {
+  width: 360px;
+  left: 20px;
+}
+
+.eventsGenerator,
+.eventQueue {
+  top: 20px;
+  position: fixed;
+  background-color: rgba(29, 29, 29, 0.5);
+  backdrop-filter: blur(20px);
+}
+
+.eventsGenerator,
+.buttonsContainer {
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.eventsContainer {
+  padding: 10px;
+  max-height: calc(100vh - 105px);
+  overflow: auto;
+}
+
+.eventsContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.event + .event {
+  margin-top: 5px;
+}
+
+.event {
+  display: flex;
+}
+
+.event.last {
+  background-color: rgba(247, 251, 254, 0.2);
+}
+
+.eventId {
+  min-width: 240px;
+  max-width: 240px;
+}
+
+.eventStatus {
+  min-width: 100px;
+  max-width: 100px;
+  text-align: center;
+}
+
+.eventId,
+.eventStatus,
+.button {
+  height: 25px;
+  line-height: 25px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgb(247, 251, 254);
+  padding: 0 10px;
+  user-select: none;
+}
+
+.button {
+  margin: 10px;
+  min-width: 150px;
+  max-width: 150px;
+  border: 1px solid rgb(247, 251, 254);
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
